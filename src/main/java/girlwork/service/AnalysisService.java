@@ -25,8 +25,8 @@ public class AnalysisService {
     }
 
     public List<ServiceData> getServiceData() {
-        ServiceData trueData = new ServiceData(true, getData().stream().filter(v -> v.getNeedsService()).count());
-        ServiceData falseData = new ServiceData(false, getData().stream().filter(v -> !v.getNeedsService()).count());
+        ServiceData trueData = new ServiceData(String.valueOf(true), getData().stream().filter(v -> v.getNeedsService()).count());
+        ServiceData falseData = new ServiceData(String.valueOf(false), getData().stream().filter(v -> !v.getNeedsService()).count());
 
         return new ArrayList<>(Arrays.asList(trueData, falseData));
     }
@@ -48,13 +48,13 @@ public class AnalysisService {
     }
 
     private class ServiceData {
-        boolean serviceNeeded;
+        String serviceNeeded;
         long total;
 
-        public boolean isServiceNeeded() { return this.serviceNeeded; }
+        public String getServiceNeeded() { return this.serviceNeeded; }
         public long getTotal() { return this.total; }
 
-        public ServiceData(boolean serviceNeeded, long total) {
+        public ServiceData(String serviceNeeded, long total) {
             this.serviceNeeded = serviceNeeded;
             this.total = total;
         }
