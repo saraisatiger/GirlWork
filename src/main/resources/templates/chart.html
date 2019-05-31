@@ -1,46 +1,105 @@
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
     <head>
-        <!--Load the AJAX API-->
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <script type="text/javascript">
 
-          // Load the Visualization API and the corechart package.
-          google.charts.load('current', {'packages':['corechart']});
+        <!--Generation Type Chart-->
+        <script th:inline="javascript">
+            // Load data
+            var genTypeData = [[${genTypeData}]];
 
-          // Set a callback to run when the Google Visualization API is loaded.
-          google.charts.setOnLoadCallback(drawChart);
+            // Load API
+            google.charts.load('current', {'packages':['corechart']});
 
-          // Callback that creates and populates a data table,
-          // instantiates the pie chart, passes in the data and
-          // draws it.
-          function drawChart() {
+            // Load chart after API is loaded
+            google.charts.setOnLoadCallback(drawChart);
 
-            // Create the data table.
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Topping');
-            data.addColumn('number', 'Slices');
-            data.addRows([
-              ['Mushrooms', 3],
-              ['Onions', 1],
-              ['Olives', 1],
-              ['Zucchini', 1],
-              ['Pepperoni', 2]
-            ]);
+            // Draw chart
+            function drawChart() {
 
-            // Set chart options
-            var options = {'title':'How Much Pizza I Ate Last Night',
-                           'width':400,
-                           'height':300};
+                // Create the data table.
+                var genTypeTable = new google.visualization.DataTable();
 
-            // Instantiate and draw our chart, passing in some options.
-            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-            chart.draw(data, options);
-          }
+                // Add columns
+                genTypeTable.addColumn('string', 'Generation Type');
+                genTypeTable.addColumn('number', '# of Sites');
+
+                // Add rows
+                genTypeTable.addRows(2)
+
+                // Add cells
+                genTypeTable.setCell(0, 0, genTypeData[0].type);
+                genTypeTable.setCell(0, 1, genTypeData[0].total);
+                genTypeTable.setCell(1, 0, genTypeData[1].type);
+                genTypeTable.setCell(1, 1, genTypeData[1].total);
+
+                // Set chart specs
+                var specs = {'title' : 'Generation Types',
+                               'width' : 400,
+                               'height' : 300};
+
+                // Instantiate and draw chart
+                var genTypeChart = new google.visualization.PieChart(document.getElementById('gen-type-chart'));
+                genTypeChart.draw(genTypeTable, specs);
+
+                document.getElementById('gen-type-chart').style.display = "inline-block";
+            }
+        </script>
+
+        <!--Service Chart-->
+        <script th:inline="javascript">
+            // Load data
+            var serviceData = [[${serviceData}]];
+
+            // Load API
+            google.charts.load('current', {'packages':['corechart']});
+
+            // Load chart after API is loaded
+            google.charts.setOnLoadCallback(drawChart);
+
+            // Draw chart
+            function drawChart() {
+
+                // Create the data table.
+                var serviceTable = new google.visualization.DataTable();
+
+                // Add columns
+                serviceTable.addColumn('string', 'Service Needed');
+                serviceTable.addColumn('number', '# of Sites');
+
+                // Add rows
+                serviceTable.addRows(2)
+
+                // Add cells
+                serviceTable.setCell(0, 0, serviceData[0].serviceNeeded);
+                serviceTable.setCell(0, 1, serviceData[0].total);
+                serviceTable.setCell(1, 0, serviceData[1].serviceNeeded);
+                serviceTable.setCell(1, 1, serviceData[1].total);
+
+                // Set chart specs
+                var specs = {'title' : 'Service Needed',
+                               'width' : 400,
+                               'height' : 300};
+
+                // Instantiate and draw chart
+                var genTypeChart = new google.visualization.PieChart(document.getElementById('service-chart'));
+                genTypeChart.draw(serviceTable, specs);
+
+                document.getElementById('service-chart').style.display = "inline-block";
+            }
         </script>
     </head>
 
     <body>
-    <!--Div that will hold the pie chart-->
-    <div id="chart_div"></div>
+        <h2>Totals</h2>
+
+        <div id="gen-type-chart"></div>
+        <div id="service-chart"></div>
     </body>
+
+    <style>
+        h2 {
+            font-family: verdana,arial,sans-serif;
+        }
+    </style>
+
 </html>

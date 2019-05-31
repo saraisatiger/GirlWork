@@ -16,17 +16,15 @@ public class TeamDataService {
     @Autowired
     TeamDataRepository repo;
 
-    public List<TeamData> getAllTeamData() {
-        return repo.findAll();
-    }
+    public List<TeamData> getAllTeamData() { return repo.findAll(); }
 
     private double getRatioNeedsService() {
-        long numNeedsService = repo.findAll()
+        long numNeedsService = getAllTeamData()
                 .stream()
                 .filter(v -> v.getNeedsService())
                 .count();
 
-        long numNeedsNoService = repo.findAll()
+        long numNeedsNoService = getAllTeamData()
                 .stream()
                 .filter(v -> !v.getNeedsService())
                 .count();
@@ -35,7 +33,7 @@ public class TeamDataService {
     }
 
     public Analysis getAnalysis() {
-        SiteData maxCapacity = repo.findAll()
+        SiteData maxCapacity = getAllTeamData()
                 .stream()
                 .max(Comparator.comparing( v -> (v.getCapacityPerUnit() * v.getUpUnits()) ))
                 .map( v -> {
@@ -52,7 +50,7 @@ public class TeamDataService {
                     }
                 ).get();
 
-        SiteData maxUnits = repo.findAll()
+        SiteData maxUnits = getAllTeamData()
                 .stream()
                 .max(Comparator.comparing(v -> v.getTotalUnits()))
                 .map( v -> {
@@ -69,7 +67,7 @@ public class TeamDataService {
                     }
                 ).get();
 
-        SiteData maxWind = repo.findAll()
+        SiteData maxWind = getAllTeamData()
                 .stream()
                 .filter(v -> v.getGenerationType().trim().equals("Wind"))
                 .max(Comparator.comparing( v -> (v.getCapacityPerUnit() * v.getUpUnits()) ))
@@ -87,7 +85,7 @@ public class TeamDataService {
                     }
                 ).get();
 
-        SiteData maxSolar = repo.findAll()
+        SiteData maxSolar = getAllTeamData()
                 .stream()
                 .filter(v -> v.getGenerationType().trim().equals("Solar"))
                 .max(Comparator.comparing( v -> (v.getCapacityPerUnit() * v.getUpUnits()) ))
@@ -104,7 +102,7 @@ public class TeamDataService {
                     }
                 ).get();
 
-        List<SiteData> needsServiceList = repo.findAll()
+        List<SiteData> needsServiceList = getAllTeamData()
                 .stream()
                 .filter(v -> v.getNeedsService())
                 .map( v -> {
@@ -132,4 +130,41 @@ public class TeamDataService {
 
         return analysis;
     }
+
+    //    public List<GenTypeData> getGenTypeData() {
+    //        GenTypeData windData = new GenTypeData("Wind", data.stream().filter(v -> v.getGenerationType().equals("Wind")).count());
+    //        GenTypeData solarData = new GenTypeData("Solar", data.stream().filter(v -> v.getGenerationType().equals("Solar")).count());
+    //
+    //        return new ArrayList<>(Arrays.asList(windData, solarData));
+    //    }
+    //
+    //    public List<ServiceData> getServiceData() {
+    //        ServiceData trueData = new ServiceData(true, data.stream().filter(v -> v.getNeedsService()).count());
+    //        ServiceData falseData = new ServiceData(false, data.stream().filter(v -> !v.getNeedsService()).count());
+    //
+    //        return new ArrayList<>(Arrays.asList(trueData, falseData));
+    //    }
+    //
+    //    /**
+    //     * helper classes for chart data
+    //     */
+    //    private class GenTypeData {
+    //        String type;
+    //        long total;
+    //
+    //        public GenTypeData(String type, long total) {
+    //            this.type = type;
+    //            this.total = total;
+    //        }
+    //    }
+    //
+    //    private class ServiceData {
+    //        boolean serviceNeeded;
+    //        long total;
+    //
+    //        public ServiceData(boolean serviceNeeded, long total) {
+    //            this.serviceNeeded = serviceNeeded;
+    //            this.total = total;
+    //        }
+    //    }
 }
