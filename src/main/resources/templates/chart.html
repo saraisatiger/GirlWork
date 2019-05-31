@@ -1,4 +1,4 @@
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
     <head>
         <!--Load the AJAX API-->
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -36,6 +36,14 @@
             var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
             chart.draw(data, options);
           }
+        </script>
+
+        <script th:inline="javascript">
+            var gt = [[${genTypeData}]];
+            var s = [[${serviceData}]];
+
+            console.log(gt);
+            console.log(s);
         </script>
     </head>
 
