@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Wrapper class for aggregated TeamData analysis
  */
-public class Analysis {
+public class Analysis2 {
     // class fields
     private SiteData maxCapacity;
     private SiteData maxUnits;
@@ -31,7 +31,7 @@ public class Analysis {
     public void setRatioNeedsService(double ratioNeedsService) { this.ratioNeedsService = ratioNeedsService; }
 
     // custom constructor
-    public Analysis(SiteData maxCapacity,
+    public Analysis2(SiteData maxCapacity,
                     SiteData maxUnits,
                     SiteData maxWind,
                     SiteData maxSolar,

@@ -1,6 +1,7 @@
 package girlwork.controller;
 
 import girlwork.service.AnalysisService;
+import girlwork.service.EnergyFarmService;
 import girlwork.service.TeamDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,8 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class MainController {
+//    @Autowired
+//    private TeamDataService service;
+
     @Autowired
-    private TeamDataService service;
+    private EnergyFarmService service;
 
     @Autowired
     private AnalysisService analysisService;
@@ -20,16 +24,18 @@ public class MainController {
 
     @GetMapping("/data")
     public String getData(Model model) {
-        model.addAttribute("data", service.getAllTeamData());
-        model.addAttribute("analytics", service.getAnalysis());
+//        model.addAttribute("data", service.getAllTeamData());
+//        model.addAttribute("analytics", service.getAnalysis());
+        model.addAttribute("data", service.getAll());
+        service.getAll().stream().forEach(v -> System.out.println(v));
         return "data";
     }
 
-    @GetMapping("/charts")
-    public String getCharts(Model model) {
-        model.addAttribute("genTypeData", analysisService.getGenTypeData());
-        model.addAttribute("serviceData", analysisService.getServiceData());
-        model.addAttribute("unitData", analysisService.getTeamUnitData());
-        return "chart";
-    }
+//    @GetMapping("/charts")
+//    public String getCharts(Model model) {
+//        model.addAttribute("genTypeData", analysisService.getGenTypeData());
+//        model.addAttribute("serviceData", analysisService.getServiceData());
+//        model.addAttribute("unitData", analysisService.getTeamUnitData());
+//        return "chart";
+//    }
 }
