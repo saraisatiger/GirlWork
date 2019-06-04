@@ -8,7 +8,7 @@
             var genTypeData = [[${genTypeData}]];
 
             // Load API
-            google.charts.load('current', {'packages':['corechart']});
+            google.charts.load('current', {'packages' : ['corechart']});
 
             // Load chart after API is loaded
             google.charts.setOnLoadCallback(drawChart);
@@ -16,7 +16,7 @@
             // Draw chart
             function drawChart() {
 
-                // Create the data table.
+                // Create data table
                 var genTypeTable = new google.visualization.DataTable();
 
                 // Add columns
@@ -32,13 +32,15 @@
                 genTypeTable.setCell(1, 0, genTypeData[1].type);
                 genTypeTable.setCell(1, 1, genTypeData[1].total);
 
-                // Set chart specs
-                var specs = {'title' : 'Generation Types',
-                               'width' : 400,
-                               'height' : 300};
+                var specs = {
+                    'title' : 'Generation Type',
+                    'width' : 400,
+                    'height' : 300
+                };
 
                 // Instantiate and draw chart
                 var genTypeChart = new google.visualization.PieChart(document.getElementById('gen-type-chart'));
+<!--                var genTypeChart = new google.visualization.ColumnChart(document.getElementById('gen-type-chart'));-->
                 genTypeChart.draw(genTypeTable, specs);
 
                 document.getElementById('gen-type-chart').style.display = "inline-block";
@@ -51,7 +53,7 @@
             var serviceData = [[${serviceData}]];
 
             // Load API
-            google.charts.load('current', {'packages':['corechart']});
+            google.charts.load('current', {'packages' : ['corechart']});
 
             // Load chart after API is loaded
             google.charts.setOnLoadCallback(drawChart);
@@ -59,7 +61,7 @@
             // Draw chart
             function drawChart() {
 
-                // Create the data table.
+                // Create data table
                 var serviceTable = new google.visualization.DataTable();
 
                 // Add columns
@@ -76,15 +78,58 @@
                 serviceTable.setCell(1, 1, serviceData[1].total);
 
                 // Set chart specs
-                var specs = {'title' : 'Service Needed',
-                               'width' : 400,
-                               'height' : 300};
+                var specs = {
+                    'title' : 'Site Status',
+                    'width' : 400,
+                    'height' : 300
+                };
 
                 // Instantiate and draw chart
-                var genTypeChart = new google.visualization.PieChart(document.getElementById('service-chart'));
-                genTypeChart.draw(serviceTable, specs);
+                var serviceTypeChart = new google.visualization.PieChart(document.getElementById('service-chart'));
+                serviceTypeChart.draw(serviceTable, specs);
 
                 document.getElementById('service-chart').style.display = "inline-block";
+            }
+        </script>
+
+        <!--Unit Chart-->
+        <script th:inline="javascript">
+            // Load data
+            var teamUnitData = [[${teamUnitData}]];
+            console.log(teamUnitData);
+
+            // Load API
+            google.charts.load('current', {'packages' : ['corechart']});
+
+            // Load chart after API is loaded
+            google.charts.setOnLoadCallback(drawChart);
+
+            // Draw chart
+            function drawChart() {
+
+                // Create data table
+                var teamUnitTable = google.visualization.arrayToDataTable([
+                    ['', 'Up Units', 'Down Units', { role: 'annotation' } ],
+                    ['Team 1', 5, 10, ''],
+                    ['Team 2', 15, 25, ''],
+                    ['Team 3', 30, 30, '']
+                ]);
+
+                // Set chart specs
+                var specs = {
+                    'title' : 'Unit Status',
+                    'width' : 600,
+                    'height' : 400,
+                    bar : { groupWidth: '75%' },
+                    legend: { position: 'top', maxLines: 3 },
+                    isStacked : true
+                };
+
+                // Instantiate and draw chart
+                var teamUnitChart = new google.visualization.ColumnChart(document.getElementById('team-unit-chart'));
+                teamUnitChart.draw(teamUnitTable, specs);
+
+                document.getElementById('team-unit-chart').style.display = "inline-block";
             }
         </script>
     </head>
@@ -94,6 +139,7 @@
 
         <div id="gen-type-chart"></div>
         <div id="service-chart"></div>
+        <div id="team-unit-chart"></div>
     </body>
 
     <style>
