@@ -29,6 +29,7 @@ public class MainController {
     public String getCharts(Model model) {
         model.addAttribute("genTypeData", analysisService.getGenTypeData());
         model.addAttribute("serviceData", analysisService.getServiceData());
+        model.addAttribute("unitData", analysisService.getTeamUnitData());
         return "chart";
     }
 }

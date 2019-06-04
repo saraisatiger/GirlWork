@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AnalysisService {
@@ -29,6 +30,12 @@ public class AnalysisService {
         ServiceData falseData = new ServiceData(String.valueOf(false), getData().stream().filter(v -> !v.getNeedsService()).count());
 
         return new ArrayList<>(Arrays.asList(trueData, falseData));
+    }
+
+    public List<TeamUnitData> getTeamUnitData() {
+        return getData().stream()
+                .map(v -> new TeamUnitData(v.getTeamName(), v.getUpUnits(), (v.getTotalUnits() - v.getUpUnits())))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -57,6 +64,22 @@ public class AnalysisService {
         public ServiceData(String serviceNeeded, long total) {
             this.serviceNeeded = serviceNeeded;
             this.total = total;
+        }
+    }
+
+    private class TeamUnitData {
+        String teamName;
+        double totalUp;
+        double totalDown;
+
+        public String getTeamName() { return this.teamName; }
+        public double getTotalUp() { return this.totalUp; }
+        public double getTotalDown() { return this.totalDown; }
+
+        public TeamUnitData(String teamName, double totalUp, double totalDown) {
+            this.teamName = teamName;
+            this.totalUp = totalUp;
+            this.totalDown = totalDown;
         }
     }
 }
