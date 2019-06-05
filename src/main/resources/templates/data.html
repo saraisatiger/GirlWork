@@ -46,10 +46,10 @@
         <div id="analysis">
             <h2>Analyzed Data</h2>
 
-            <h4>Statistics</h4>
+            <h4>Wind Site Statistics</h4>
             <table>
                 <tr>
-                    <th>Renewable Type</th>
+                    <th>Category</th>
                     <th>Site Name</th>
                     <th>Total Units</th>
                     <th>Operating Units</th>
@@ -57,57 +57,103 @@
                     <th>Operating Capacity (MW)</th>
                 </tr>
                 <tr>
-                    <td th:text="${analytics.maxCapacity.category}"></td>
-                    <td th:text="${analytics.maxCapacity.siteName}"></td>
-                    <td th:text="${analytics.maxCapacity.operatingCapacity}"></td>
-                    <td th:text="${analytics.maxCapacity.totalCapacity}"></td>
-                    <td th:text="${analytics.maxCapacity.generationType}"></td>
-                    <td th:text="${analytics.maxCapacity.teamName}"></td>
+                    <td>Max Total Units</td>
+                    <td th:text="${maxTotalUnitsWind.name}"></td>
+                    <td th:text="${maxTotalUnitsWind.totalUnits}"></td>
+                    <td th:text="${maxTotalUnitsWind.operatingUnits}"></td>
+                    <td th:text="${maxTotalUnitsWind.totalUnits * maxTotalUnitsWind.unitCapacity}"></td>
+                    <td th:text="${maxTotalUnitsWind.operatingUnits * maxTotalUnitsWind.unitCapacity}"></td>
                 </tr>
                 <tr>
-                    <td th:text="${analytics.maxUnits.category}"></td>
-                    <td th:text="${analytics.maxUnits.siteName}"></td>
-                    <td th:text="${analytics.maxUnits.operatingCapacity}"></td>
-                    <td th:text="${analytics.maxUnits.totalCapacity}"></td>
-                    <td th:text="${analytics.maxUnits.generationType}"></td>
-                    <td th:text="${analytics.maxUnits.teamName}"></td>
+                    <td>Max Operating Units</td>
+                    <td th:text="${maxOperatingUnitsWind.name}"></td>
+                    <td th:text="${maxOperatingUnitsWind.totalUnits}"></td>
+                    <td th:text="${maxOperatingUnitsWind.operatingUnits}"></td>
+                    <td th:text="${maxOperatingUnitsWind.totalUnits * maxOperatingUnitsWind.unitCapacity}"></td>
+                    <td th:text="${maxOperatingUnitsWind.operatingUnits * maxOperatingUnitsWind.unitCapacity}"></td>
                 </tr>
                 <tr>
-                    <td th:text="${analytics.maxWind.category}"></td>
-                    <td th:text="${analytics.maxWind.siteName}"></td>
-                    <td th:text="${analytics.maxWind.operatingCapacity}"></td>
-                    <td th:text="${analytics.maxWind.totalCapacity}"></td>
-                    <td th:text="${analytics.maxWind.generationType}"></td>
-                    <td th:text="${analytics.maxWind.teamName}"></td>
+                    <td>Max Total Capacity (MW)</td>
+                    <td th:text="${maxTotalCapacityWind.name}"></td>
+                    <td th:text="${maxTotalCapacityWind.totalUnits}"></td>
+                    <td th:text="${maxTotalCapacityWind.operatingUnits}"></td>
+                    <td th:text="${maxTotalCapacityWind.totalUnits * maxTotalCapacityWind.unitCapacity}"></td>
+                    <td th:text="${maxTotalCapacityWind.operatingUnits * maxTotalCapacityWind.unitCapacity}"></td>
                 </tr>
                 <tr>
-                    <td th:text="${analytics.maxSolar.category}"></td>
-                    <td th:text="${analytics.maxSolar.siteName}"></td>
-                    <td th:text="${analytics.maxSolar.operatingCapacity}"></td>
-                    <td th:text="${analytics.maxSolar.totalCapacity}"></td>
-                    <td th:text="${analytics.maxSolar.generationType}"></td>
-                    <td th:text="${analytics.maxSolar.teamName}"></td>
+                    <td>Max Operating Capacity (MW)</td>
+                    <td th:text="${maxOperatingCapacityWind.name}"></td>
+                    <td th:text="${maxOperatingCapacityWind.totalUnits}"></td>
+                    <td th:text="${maxOperatingCapacityWind.operatingUnits}"></td>
+                    <td th:text="${maxOperatingCapacityWind.totalUnits * maxOperatingCapacityWind.unitCapacity}"></td>
+                    <td th:text="${maxOperatingCapacityWind.operatingUnits * maxOperatingCapacityWind.unitCapacity}"></td>
                 </tr>
             </table>
 
             <br />
 
-            <h4>Sites in Need of Service</h4>
+            <h4>Solar Site Statistics</h4>
             <table>
                 <tr>
+                    <th>Category</th>
                     <th>Site Name</th>
-                    <th>Units Up</th>
-                    <th>Units Down</th>
-                    <th>Team Name</th>
+                    <th>Total Units</th>
+                    <th>Operating Units</th>
+                    <th>Total Capacity (MW)</th>
+                    <th>Operating Capacity (MW)</th>
                 </tr>
-                <tr th:each="site : ${analytics.needsServiceSiteNames}">
-                    <td th:text="${site.siteName}"></td>
-                    <td th:text="${site.unitsUp}"></td>
-                    <td th:text="${site.unitsDown}"></td>
-                    <td th:text="${site.teamName}"></td>
+                <tr>
+                    <td>Max Total Units</td>
+                    <td th:text="${maxTotalUnitsSolar.name}"></td>
+                    <td th:text="${maxTotalUnitsSolar.totalUnits}"></td>
+                    <td th:text="${maxTotalUnitsSolar.operatingUnits}"></td>
+                    <td th:text="${maxTotalUnitsSolar.totalUnits * maxTotalUnitsSolar.unitCapacity}"></td>
+                    <td th:text="${maxTotalUnitsSolar.operatingUnits * maxTotalUnitsSolar.unitCapacity}"></td>
+                </tr>
+                <tr>
+                    <td>Max Operating Units</td>
+                    <td th:text="${maxOperatingUnitsSolar.name}"></td>
+                    <td th:text="${maxOperatingUnitsSolar.totalUnits}"></td>
+                    <td th:text="${maxOperatingUnitsSolar.operatingUnits}"></td>
+                    <td th:text="${maxOperatingUnitsSolar.totalUnits * maxOperatingUnitsSolar.unitCapacity}"></td>
+                    <td th:text="${maxOperatingUnitsSolar.operatingUnits * maxOperatingUnitsSolar.unitCapacity}"></td>
+                </tr>
+                <tr>
+                    <td>Max Total Capacity (MW)</td>
+                    <td th:text="${maxTotalCapacitySolar.name}"></td>
+                    <td th:text="${maxTotalCapacitySolar.totalUnits}"></td>
+                    <td th:text="${maxTotalCapacitySolar.operatingUnits}"></td>
+                    <td th:text="${maxTotalCapacitySolar.totalUnits * maxTotalCapacitySolar.unitCapacity}"></td>
+                    <td th:text="${maxTotalCapacitySolar.operatingUnits * maxTotalCapacitySolar.unitCapacity}"></td>
+                </tr>
+                <tr>
+                    <td>Max Operating Capacity (MW)</td>
+                    <td th:text="${maxOperatingCapacitySolar.name}"></td>
+                    <td th:text="${maxOperatingCapacitySolar.totalUnits}"></td>
+                    <td th:text="${maxOperatingCapacitySolar.operatingUnits}"></td>
+                    <td th:text="${maxOperatingCapacitySolar.totalUnits * maxOperatingCapacitySolar.unitCapacity}"></td>
+                    <td th:text="${maxOperatingCapacitySolar.operatingUnits * maxOperatingCapacitySolar.unitCapacity}"></td>
                 </tr>
             </table>
-        </div>
+
+<!--            <br />-->
+
+<!--            <h4>Sites in Need of Service</h4>-->
+<!--            <table>-->
+<!--                <tr>-->
+<!--                    <th>Site Name</th>-->
+<!--                    <th>Units Up</th>-->
+<!--                    <th>Units Down</th>-->
+<!--                    <th>Team Name</th>-->
+<!--                </tr>-->
+<!--                <tr th:each="site : ${analytics.needsServiceSiteNames}">-->
+<!--                    <td th:text="${site.siteName}"></td>-->
+<!--                    <td th:text="${site.unitsUp}"></td>-->
+<!--                    <td th:text="${site.unitsDown}"></td>-->
+<!--                    <td th:text="${site.teamName}"></td>-->
+<!--                </tr>-->
+<!--            </table>-->
+<!--        </div>-->
 
 <!--        <div id="analysis">-->
 <!--            <h2>Analyzed Data</h2>-->
