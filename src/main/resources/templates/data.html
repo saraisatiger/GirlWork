@@ -1,14 +1,160 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>GirlWork Analysis</title>
+
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+        <script>
+            function getAnalysis() {
+                // hide button
+                document.getElementById("btnAnalysis").style.visibility = "hidden";
+
+                // display stats
+                document.getElementById("statistics").style.display = "block";
+
+                // display charts
+                document.getElementById("renewable-type-chart").style.display = "inline-block";
+                document.getElementById("deployment-status-chart").style.display = "inline-block";
+                document.getElementById("service-status-chart").style.display = "inline-block";
+            }
+        </script>
+
+        <script th:inline="javascript">
+            var x = [[${data}]];
+            console.log(x);
+        </script>
+
+        <!--Renewable Type Chart-->
+        <script th:inline="javascript">
+            // Load data
+            var renewableTypeData = [[${renewableTypeData}]];
+
+            // Organize data
+            var renewableTypeArray = [];
+
+            // column title placeholders
+            renewableTypeArray.push(['', '']);
+
+            // add data
+            Object.entries(renewableTypeData).forEach(function(obj) {
+                renewableTypeArray.push(obj);
+            });
+
+            // Load API
+            google.charts.load('current', {'packages' : ['corechart']});
+
+            // Load chart after API is loaded
+            google.charts.setOnLoadCallback(drawChart);
+
+            // Draw chart
+            function drawChart() {
+
+                // Create data table
+                var renewableTypeTable = google.visualization.arrayToDataTable(renewableTypeArray);
+
+                var specs = {
+                    'title' : 'Renewable Types',
+                    'width' : 400,
+                    'height' : 400
+                };
+
+                // Instantiate and draw chart
+                var renewableTypeChart = new google.visualization.PieChart(document.getElementById('renewable-type-chart'));
+                renewableTypeChart.draw(renewableTypeTable, specs);
+
+                document.getElementById('renewable-type-chart').style.display = "none";
+            }
+        </script>
+
+        <!--Deployment Status Chart-->
+        <script th:inline="javascript">
+            // Load data
+            var deploymentStatusData = [[${deploymentStatusData}]];
+
+            // Organize data
+            var deploymentStatusArray = [];
+
+            // column title placeholders
+            deploymentStatusArray.push(['', '']);
+
+            // add data
+            Object.entries(deploymentStatusData).forEach(function(obj) {
+                deploymentStatusArray.push(obj);
+            });
+
+            // Load API
+            google.charts.load('current', {'packages' : ['corechart']});
+
+            // Load chart after API is loaded
+            google.charts.setOnLoadCallback(drawChart);
+
+            // Draw chart
+            function drawChart() {
+
+                // Create data table
+                var deploymentStatusTable = google.visualization.arrayToDataTable(deploymentStatusArray);
+
+                var specs = {
+                    'title' : 'Deployment Required Status',
+                    'width' : 400,
+                    'height' : 400
+                };
+
+                // Instantiate and draw chart
+                var deploymentStatusChart = new google.visualization.PieChart(document.getElementById('deployment-status-chart'));
+                deploymentStatusChart.draw(deploymentStatusTable, specs);
+
+                document.getElementById('deployment-status-chart').style.display = "none";
+            }
+        </script>
+
+        <!--Service Status Chart-->
+        <script th:inline="javascript">
+            // Load data
+            var serviceStatusData = [[${serviceStatusData}]];
+
+            // Organize data
+            var serviceStatusArray = [];
+
+            // column title placeholders
+            serviceStatusArray.push(['', '']);
+
+            // add data
+            Object.entries(serviceStatusData).forEach(function(obj) {
+                serviceStatusArray.push(obj);
+            });
+
+            // Load API
+            google.charts.load('current', {'packages' : ['corechart']});
+
+            // Load chart after API is loaded
+            google.charts.setOnLoadCallback(drawChart);
+
+            // Draw chart
+            function drawChart() {
+
+                // Create data table
+                var serviceStatusTable = google.visualization.arrayToDataTable(serviceStatusArray);
+
+                var specs = {
+                    'title' : 'Service Required Status',
+                    'width' : 400,
+                    'height' : 400
+                };
+
+                // Instantiate and draw chart
+                var serviceStatusChart = new google.visualization.PieChart(document.getElementById('service-status-chart'));
+                serviceStatusChart.draw(serviceStatusTable, specs);
+
+                document.getElementById('service-status-chart').style.display = "none";
+            }
+        </script>
     </head>
 
     <body>
         <div id="data">
-            <h2>Team Data</h2>
-
+            <h2>Site Data</h2>
             <table>
                 <tr>
                     <th>Site Name</th>
@@ -43,9 +189,8 @@
             </div>
         </div>
 
-        <div id="analysis">
+        <div class="analytics" id="statistics">
             <h2>Analyzed Data</h2>
-
             <h4>Wind Site Statistics</h4>
             <table>
                 <tr>
@@ -135,108 +280,11 @@
                     <td th:text="${maxOperatingCapacitySolar.operatingUnits * maxOperatingCapacitySolar.unitCapacity}"></td>
                 </tr>
             </table>
-
-<!--            <br />-->
-
-<!--            <h4>Sites in Need of Service</h4>-->
-<!--            <table>-->
-<!--                <tr>-->
-<!--                    <th>Site Name</th>-->
-<!--                    <th>Units Up</th>-->
-<!--                    <th>Units Down</th>-->
-<!--                    <th>Team Name</th>-->
-<!--                </tr>-->
-<!--                <tr th:each="site : ${analytics.needsServiceSiteNames}">-->
-<!--                    <td th:text="${site.siteName}"></td>-->
-<!--                    <td th:text="${site.unitsUp}"></td>-->
-<!--                    <td th:text="${site.unitsDown}"></td>-->
-<!--                    <td th:text="${site.teamName}"></td>-->
-<!--                </tr>-->
-<!--            </table>-->
-<!--        </div>-->
-
-<!--        <div id="analysis">-->
-<!--            <h2>Analyzed Data</h2>-->
-
-<!--            <h4>Sites Producing Maximum Generation</h4>-->
-<!--            <table>-->
-<!--                <tr>-->
-<!--                    <th>Category</th>-->
-<!--                    <th>Site Name</th>-->
-<!--                    <th>Operating Capacity (MW)</th>-->
-<!--                    <th>Total Capacity (MW)</th>-->
-<!--                    <th>Generation Type</th>-->
-<!--                    <th>Team Name</th>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td th:text="${analytics.maxCapacity.category}"></td>-->
-<!--                    <td th:text="${analytics.maxCapacity.siteName}"></td>-->
-<!--                    <td th:text="${analytics.maxCapacity.operatingCapacity}"></td>-->
-<!--                    <td th:text="${analytics.maxCapacity.totalCapacity}"></td>-->
-<!--                    <td th:text="${analytics.maxCapacity.generationType}"></td>-->
-<!--                    <td th:text="${analytics.maxCapacity.teamName}"></td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td th:text="${analytics.maxUnits.category}"></td>-->
-<!--                    <td th:text="${analytics.maxUnits.siteName}"></td>-->
-<!--                    <td th:text="${analytics.maxUnits.operatingCapacity}"></td>-->
-<!--                    <td th:text="${analytics.maxUnits.totalCapacity}"></td>-->
-<!--                    <td th:text="${analytics.maxUnits.generationType}"></td>-->
-<!--                    <td th:text="${analytics.maxUnits.teamName}"></td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td th:text="${analytics.maxWind.category}"></td>-->
-<!--                    <td th:text="${analytics.maxWind.siteName}"></td>-->
-<!--                    <td th:text="${analytics.maxWind.operatingCapacity}"></td>-->
-<!--                    <td th:text="${analytics.maxWind.totalCapacity}"></td>-->
-<!--                    <td th:text="${analytics.maxWind.generationType}"></td>-->
-<!--                    <td th:text="${analytics.maxWind.teamName}"></td>-->
-<!--                </tr>-->
-<!--                <tr>-->
-<!--                    <td th:text="${analytics.maxSolar.category}"></td>-->
-<!--                    <td th:text="${analytics.maxSolar.siteName}"></td>-->
-<!--                    <td th:text="${analytics.maxSolar.operatingCapacity}"></td>-->
-<!--                    <td th:text="${analytics.maxSolar.totalCapacity}"></td>-->
-<!--                    <td th:text="${analytics.maxSolar.generationType}"></td>-->
-<!--                    <td th:text="${analytics.maxSolar.teamName}"></td>-->
-<!--                </tr>-->
-<!--            </table>-->
-
-<!--            <br />-->
-
-<!--            <h4>Sites in Need of Service</h4>-->
-<!--            <table>-->
-<!--                <tr>-->
-<!--                    <th>Site Name</th>-->
-<!--                    <th>Units Up</th>-->
-<!--                    <th>Units Down</th>-->
-<!--                    <th>Team Name</th>-->
-<!--                </tr>-->
-<!--                <tr th:each="site : ${analytics.needsServiceSiteNames}">-->
-<!--                    <td th:text="${site.siteName}"></td>-->
-<!--                    <td th:text="${site.unitsUp}"></td>-->
-<!--                    <td th:text="${site.unitsDown}"></td>-->
-<!--                    <td th:text="${site.teamName}"></td>-->
-<!--                </tr>-->
-<!--            </table>-->
-
-<!--            <br />-->
-
-<!--            <h4 th:text="${'Percentage of Sites in Need of Service: ' + analytics.ratioNeedsService + '%'}"></h4>-->
-<!--        </div>-->
+        </div>
+        <div class="analytics" id="renewable-type-chart"></div>
+        <div class="analytics" id="deployment-status-chart"></div>
+        <div class="analytics" id="service-status-chart"></div>
     </body>
-
-    <script>
-        function getAnalysis() {
-            document.getElementById("analysis").style.display = "block";
-            document.getElementById("btnAnalysis").style.visibility = "hidden";
-        }
-    </script>
-
-    <script th:inline="javascript">
-        var x = [[${data}]];
-        console.log(x);
-    </script>
 
     <style>
         h2, h4, button {
@@ -268,7 +316,7 @@
             background-color: #ffffff;
         }
 
-        #analysis {
+        .analytics {
             display: none;
         }
     </style>

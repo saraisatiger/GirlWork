@@ -15,26 +15,26 @@ public class MainController {
 
     @GetMapping("/data")
     public String getData(Model model) {
+        // all data
         model.addAttribute("data", service.getAll());
 
+        // wind stats
         model.addAttribute("maxTotalUnitsWind", service.maxTotalUnitsByRenewableType("WIND"));
         model.addAttribute("maxOperatingUnitsWind", service.maxOperatingUnitsByRenewabletype("WIND"));
         model.addAttribute("maxTotalCapacityWind", service.maxTotalCapacityByRenewableType("WIND"));
         model.addAttribute("maxOperatingCapacityWind", service.maxOperatingCapacityByRenewableType("WIND"));
 
+        // solar stats
         model.addAttribute("maxTotalUnitsSolar", service.maxTotalUnitsByRenewableType("SOLAR"));
         model.addAttribute("maxOperatingUnitsSolar", service.maxOperatingUnitsByRenewabletype("SOLAR"));
         model.addAttribute("maxTotalCapacitySolar", service.maxOperatingCapacityByRenewableType("SOLAR"));
         model.addAttribute("maxOperatingCapacitySolar", service.maxOperatingCapacityByRenewableType("SOLAR"));
 
+        // charts
+        model.addAttribute("renewableTypeData", service.countByRenewableType());
+        model.addAttribute("deploymentStatusData", service.countByDeploymentRequired());
+        model.addAttribute("serviceStatusData", service.countByServiceRequired());
+
         return "data";
     }
-
-//    @GetMapping("/charts")
-//    public String getCharts(Model model) {
-//        model.addAttribute("genTypeData", analysisService.getGenTypeData());
-//        model.addAttribute("serviceData", analysisService.getServiceData());
-//        model.addAttribute("unitData", analysisService.getTeamUnitData());
-//        return "chart";
-//    }
 }
