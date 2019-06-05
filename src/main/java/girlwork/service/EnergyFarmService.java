@@ -13,6 +13,7 @@ public class EnergyFarmService {
     EnergyFarmRepository repo;
 
     public List<EnergyFarm> getAll() {
+        repo.findAll().stream().forEach(v -> System.out.println(v.toString()));
         return repo.findAll();
     }
 

@@ -68,8 +68,54 @@ public class EnergyFarm {
         return this.unitCapacity;
     }
 
+    // standard setters
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setRenewableType(String renewableType) {
+        this.renewableType = renewableType;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setWeatherQuality(int weatherQuality) {
+        this.weatherQuality = weatherQuality;
+    }
+
+    public void setWeatherQualityType(String weatherQualityType) {
+        this.weatherQualityType = weatherQualityType;
+    }
+
+    public void setTotalUnits(int totalUnits) {
+        this.totalUnits = totalUnits;
+    }
+
+    public void setOperatingUnits(int operatingUnits) {
+        this.operatingUnits = operatingUnits;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
+
+    public void setDeploymentRequired(boolean deploymentRequired) {
+        this.deploymentRequired = deploymentRequired;
+    }
+
+    public void setServiceRequired(boolean serviceRequired) {
+        this.serviceRequired = serviceRequired;
+    }
+
+    public void setUnitCapacity(int unitCapacity) {
+        this.unitCapacity = unitCapacity;
+    }
+
     public String toString() {
-        return this.name + ", " +
+        return this._id + ": " +
+                this.name + ", " +
                 this.renewableType + ", " +
                 this.location + ", " +
                 this.weatherQuality + ", " +

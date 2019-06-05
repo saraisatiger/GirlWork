@@ -1,5 +1,6 @@
 package girlwork.controller;
 
+import girlwork.repository.EnergyFarmRepository;
 import girlwork.service.AnalysisService;
 import girlwork.service.EnergyFarmService;
 import girlwork.service.TeamDataService;
@@ -27,7 +28,7 @@ public class MainController {
 //        model.addAttribute("data", service.getAllTeamData());
 //        model.addAttribute("analytics", service.getAnalysis());
         model.addAttribute("data", service.getAll());
-        service.getAll().stream().forEach(v -> System.out.println(v));
+//        service.getAll().stream().forEach(v -> System.out.println(v));
         return "data";
     }
 
