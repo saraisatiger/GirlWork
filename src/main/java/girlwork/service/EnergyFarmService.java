@@ -73,7 +73,7 @@ public class EnergyFarmService {
         map.put("SOLAR", getAll().stream()
                 .filter(v -> v.getRenewableType().toUpperCase().equals("WIND"))
                 .count());
-e
+        
         return map;
     }
 
