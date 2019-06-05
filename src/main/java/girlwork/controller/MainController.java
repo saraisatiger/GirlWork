@@ -11,14 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class MainController {
-//    @Autowired
-//    private TeamDataService service;
-
-    @Autowired
-    private EnergyFarmService service;
-
-    @Autowired
-    private AnalysisService analysisService;
+    @Autowired private EnergyFarmService service;
+//    @Autowired private AnalysisService analysisService;
 
     @GetMapping("/")
     public String index() { return "index"; }
@@ -28,7 +22,6 @@ public class MainController {
 //        model.addAttribute("data", service.getAllTeamData());
 //        model.addAttribute("analytics", service.getAnalysis());
         model.addAttribute("data", service.getAll());
-//        service.getAll().stream().forEach(v -> System.out.println(v));
         return "data";
     }
 
