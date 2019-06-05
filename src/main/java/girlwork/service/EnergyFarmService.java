@@ -17,12 +17,10 @@ import static java.util.Comparator.comparingInt;
 public class EnergyFarmService {
     @Autowired EnergyFarmRepository repo;
 
+    // all data
     public List<EnergyFarm> getAll() {
         return repo.findAll();
     }
-
-    // wind site units stacked column chart (operating units, total units)
-    // solar site units stacked column chart (operating units, total units)
 
     public List<EnergyFarm> getAllByRenewableType(String renewableType) {
         return getAll().stream()
@@ -73,7 +71,7 @@ public class EnergyFarmService {
         map.put("SOLAR", getAll().stream()
                 .filter(v -> v.getRenewableType().toUpperCase().equals("WIND"))
                 .count());
-        
+
         return map;
     }
 
