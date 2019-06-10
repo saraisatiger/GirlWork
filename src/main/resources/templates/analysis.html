@@ -1,28 +1,104 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
     <head>
-        <title>GirlWork Analysis</title>
+        <title>Energy Site Data Analysis</title>
 
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-        <script>
-            function getAnalysis() {
-                // hide button
-                document.getElementById("btnAnalysis").style.visibility = "hidden";
+        <!--Wind Status Chart-->
+        <script th:inline="javascript">
+            // Load data
+            var windUnitData = [[${windUnitData}]];
 
-                // display stats
-                document.getElementById("statistics").style.display = "block";
+            // Organize data
+            var windUnitArray = [];
 
-                // display charts
-                document.getElementById("renewable-type-chart").style.display = "inline-block";
-                document.getElementById("deployment-status-chart").style.display = "inline-block";
-                document.getElementById("service-status-chart").style.display = "inline-block";
+            // column title placeholders
+            windUnitArray.push(['', 'Up', 'Down', { role: 'annotation' }]);
+
+            // add data
+            Object.entries(windUnitData).forEach(function(obj) {
+                windUnitArray.push([obj[1].name,
+                obj[1].operatingUnits,
+                (obj[1].totalUnits - obj[1].operatingUnits),
+                '']);
+            });
+
+            // Load API
+            google.charts.load('current', {'packages' : ['corechart']});
+
+            // Load chart after API is loaded
+            google.charts.setOnLoadCallback(drawChart);
+
+            // Draw chart
+            function drawChart() {
+
+                // Create data table
+                var windUnitTable = google.visualization.arrayToDataTable(windUnitArray);
+
+                var specs = {
+                    'title' : 'Wind Sites Status',
+                    'width' : 400,
+                    'height' : 400,
+                    legend: { position: 'top', maxLines: 3 },
+                    bar: { groupWidth: '75%' },
+                    isStacked: true
+                };
+
+                // Instantiate and draw chart
+                var windUnitChart = new google.visualization.ColumnChart(document.getElementById('wind-unit-chart'));
+                windUnitChart.draw(windUnitTable, specs);
+
+                document.getElementById('wind-unit-chart').style.display = "inline-block";
             }
         </script>
 
+        <!--Solar Status Chart-->
         <script th:inline="javascript">
-            var x = [[${data}]];
-            console.log(x);
+            // Load data
+            var solarUnitData = [[${solarUnitData}]];
+
+            // Organize data
+            var solarUnitArray = [];
+
+            // column title placeholders
+            solarUnitArray.push(['', 'Up', 'Down', { role: 'annotation' }]);
+
+            // add data
+            Object.entries(solarUnitData).forEach(function(obj) {
+                solarUnitArray.push([obj[1].name,
+                obj[1].operatingUnits,
+                (obj[1].totalUnits - obj[1].operatingUnits),
+                '']);
+            });
+
+            // Load API
+            google.charts.load('current', {'packages' : ['corechart']});
+
+            // Load chart after API is loaded
+            google.charts.setOnLoadCallback(drawChart);
+
+            // Draw chart
+            function drawChart() {
+
+                // Create data table
+                var solarUnitTable = google.visualization.arrayToDataTable(solarUnitArray);
+
+                var specs = {
+                    'title' : 'Solar Sites Status',
+                    'width' : 400,
+                    'height' : 400,
+                    legend: { position: 'top', maxLines: 3 },
+                    bar: { groupWidth: '75%' },
+                    isStacked: true
+                };
+
+                // Instantiate and draw chart
+                var solarUnitChart = new google.visualization.ColumnChart(document.getElementById('solar-unit-chart'));
+                solarUnitChart.draw(solarUnitTable, specs);
+
+                document.getElementById('solar-unit-chart').style.display = "inline-block";
+            }
         </script>
 
         <!--Renewable Type Chart-->
@@ -63,7 +139,7 @@
                 var renewableTypeChart = new google.visualization.PieChart(document.getElementById('renewable-type-chart'));
                 renewableTypeChart.draw(renewableTypeTable, specs);
 
-                document.getElementById('renewable-type-chart').style.display = "none";
+                document.getElementById('renewable-type-chart').style.display = "inline-block";
             }
         </script>
 
@@ -105,7 +181,7 @@
                 var deploymentStatusChart = new google.visualization.PieChart(document.getElementById('deployment-status-chart'));
                 deploymentStatusChart.draw(deploymentStatusTable, specs);
 
-                document.getElementById('deployment-status-chart').style.display = "none";
+                document.getElementById('deployment-status-chart').style.display = "inline-block";
             }
         </script>
 
@@ -147,14 +223,15 @@
                 var serviceStatusChart = new google.visualization.PieChart(document.getElementById('service-status-chart'));
                 serviceStatusChart.draw(serviceStatusTable, specs);
 
-                document.getElementById('service-status-chart').style.display = "none";
+                document.getElementById('service-status-chart').style.display = "inline-block";
             }
         </script>
     </head>
 
     <body>
-        <div id="data">
+        <div>
             <h2>Site Data</h2>
+
             <table>
                 <tr>
                     <th>Site Name</th>
@@ -168,30 +245,26 @@
                     <th>Deployment Required</th>
                     <th>Service Required</th>
                 </tr>
-                <tr th:each="item : ${data}">
-                    <td th:text="${item.name}"></td>
-                    <td th:text="${item.renewableType}"></td>
-                    <td th:text="${item.location}"></td>
-                    <td th:text="${item.weatherQualityType}"></td>
-                    <td th:text="${item.totalUnits}"></td>
-                    <td th:text="${item.operatingUnits}"></td>
-                    <td th:text="${item.unitCapacity}"></td>
-                    <td th:text="${item.condition}"></td>
-                    <td th:text="${item.deploymentRequired}"></td>
-                    <td th:text="${item.serviceRequired}"></td>
+                <tr th:each="site : ${siteData}">
+                    <td th:text="${site.name}"></td>
+                    <td th:text="${site.renewableType}"></td>
+                    <td th:text="${site.location}"></td>
+                    <td th:text="${site.weatherQualityType}"></td>
+                    <td th:text="${site.totalUnits}"></td>
+                    <td th:text="${site.operatingUnits}"></td>
+                    <td th:text="${site.unitCapacity}"></td>
+                    <td th:text="${site.condition}"></td>
+                    <td th:text="${site.deploymentRequired}"></td>
+                    <td th:text="${site.serviceRequired}"></td>
                 </tr>
             </table>
-
-            <br />
-
-            <div>
-                <button id="btnAnalysis" onClick="getAnalysis()">Analyze!</button>
-            </div>
         </div>
 
-        <div class="analytics" id="statistics">
-            <h2>Analyzed Data</h2>
+        <div>
+            <h2>By Renewable Type</h2>
+
             <h4>Wind Site Statistics</h4>
+
             <table>
                 <tr>
                     <th>Category</th>
@@ -235,9 +308,12 @@
                 </tr>
             </table>
 
+            <div id="wind-unit-chart"></div>
+
             <br />
 
             <h4>Solar Site Statistics</h4>
+
             <table>
                 <tr>
                     <th>Category</th>
@@ -280,10 +356,15 @@
                     <td th:text="${maxOperatingCapacitySolar.operatingUnits * maxOperatingCapacitySolar.unitCapacity}"></td>
                 </tr>
             </table>
+
+            <div id="solar-unit-chart"></div>
         </div>
-        <div class="analytics" id="renewable-type-chart"></div>
-        <div class="analytics" id="deployment-status-chart"></div>
-        <div class="analytics" id="service-status-chart"></div>
+
+        <h2>Totals</h2>
+
+        <div id="renewable-type-chart"></div>
+        <div id="deployment-status-chart"></div>
+        <div id="service-status-chart"></div>
     </body>
 
     <style>
@@ -314,10 +395,6 @@
             border-style: solid;
             border-color: #666666;
             background-color: #ffffff;
-        }
-
-        .analytics {
-            display: none;
         }
     </style>
 </html>
