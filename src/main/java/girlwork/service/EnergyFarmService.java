@@ -1,6 +1,7 @@
 package girlwork.service;
 
 import girlwork.domain.EnergyFarm;
+import girlwork.domain.RenewableType;
 import girlwork.repository.EnergyFarmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,11 +66,11 @@ public class EnergyFarmService {
         Map<String, Long> map = new HashMap<>();
 
         map.put("WIND", getAll().stream()
-                .filter(v -> v.getRenewableType().toUpperCase().equals("WIND"))
+                .filter(v -> v.getRenewableType().toUpperCase().equals(RenewableType.WIND.toString()))
                 .count());
 
         map.put("SOLAR", getAll().stream()
-                .filter(v -> v.getRenewableType().toUpperCase().equals("WIND"))
+                .filter(v -> v.getRenewableType().toUpperCase().equals(RenewableType.SOLAR.toString()))
                 .count());
 
         return map;
